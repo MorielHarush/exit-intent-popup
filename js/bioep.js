@@ -120,7 +120,12 @@ window.bioEp = {
 		else {
 			this.popupEl = document.createElement("div");
 			this.popupEl.id = "bio_ep";
-			this.popupEl.innerHTML = this.html;
+			if (window.DOMPurify) {
+				this.popupEl.innerHTML = window.DOMPurify.sanitize(this.html);
+			} else {
+				console.error('bioep: DOMPurify not loaded - HTML content disabled for security');
+				this.popupEl.innerHTML = 'Popup content disabled - load DOMPurify for HTML support';
+			}
 			document.body.appendChild(this.popupEl);
 		}
 
@@ -305,3 +310,4 @@ window.bioEp = {
 		});
 	}
 }
+
